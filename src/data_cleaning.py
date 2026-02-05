@@ -1,9 +1,11 @@
 import pandas as pd
 import numpy as np
 
+#replace null values with None
 def replace_with_none(df: pd.DataFrame) -> pd.DataFrame:
     return df.replace({np.nan: None})
 
+#trim whitespace from string columns
 def trim_whitespace(df: pd.DataFrame) -> pd.DataFrame:
     for col in df.columns:
         if df[col].dtype == "object":

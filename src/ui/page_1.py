@@ -19,9 +19,7 @@ def app():
         df = remove_duplicates(df)
         st.write("### Cleaned Data")    
         st.dataframe(df)
-        st.sidebar.success("success!")
-    else:
-        st.sidebar.feedback("Data did not process.")
+        st.sidebar.success("success!") 
 
 if __name__ == "__main__":
     app()

@@ -21,11 +21,24 @@ def app():
 
     st.sidebar.header("Data Standardization Options")
 
-    
+    # Date column selection
+    date_columns = st.sidebar.multiselect("Select date columns to standardize:", options=df.columns)
+    date_format = st.sidebar.text_input("Enter desired date format (e.g., %Y-%m-%d):", value="%Y-%m-%d")
+    # Unit normalization
+    unit_column = st.sidebar.selectbox("Select unit column to normalize:", options=df.columns)
+    from_unit = st.sidebar.text_input("Enter current unit (e.g., cm):", value="cm")
+    to_unit = st.sidebar.text_input("Enter desired unit (e.g., m):", value="m")
+    factor = st.sidebar.number_input("Enter conversion factor (e.g., 0.01 for cm to m):", value=0.01)
+    # Text case standardization
+    text_columns = st.sidebar.multiselect("Select text columns to standardize case:", options=df.columns)
+    case_option = st.sidebar.selectbox("Select case option:", options=['lower', 'upper', 'title'])
+
     if st.sidebar.button("Standardize Data"):
-        df = convert_date_format(df, date_columns=['date_column'], date_format='%Y-%m-%d')
-        df = normalize_units(df, unit_mappings={'unit_column': ('old_unit', 'new_unit', 0.001)})
-        df = standardize_text_case(df, text_columns=['text_column'], case='lower')
+        # Apply standardization functions, if the respective options are not blank
+        df = convert_date_format(df, date_columns=date_columns, date_format=date_format) if date_columns else df
+        df = normalize_units(df, unit_mappings={unit_column: (from_unit, to_unit, factor)}) if unit_column else df
+        df = standardize_text_case(df, text_columns=text_columns, case=case_option) if text_columns else df
+
         st.write("### Standardized Data")    
         st.dataframe(df)
         st.sidebar.success("success!")

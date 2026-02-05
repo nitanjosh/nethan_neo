@@ -22,16 +22,18 @@ def app():
     st.sidebar.header("Data Standardization Options")
 
     # Date column selection
-    date_columns = st.sidebar.multiselect("Select date columns to standardize:", options=df.columns)
-    date_format = st.sidebar.text_input("Enter desired date format (e.g., %Y-%m-%d):", value="%Y-%m-%d")
+    date_columns = st.sidebar.multiselect("Select date columns to standardize (leave as is if not wanted):", options=df.columns)
+    #Disable if no date columns are selected
+    date_format = st.sidebar.text_input("Enter desired date format (e.g., %Y-%m-%d):", value="%Y-%m-%d", disabled=(len(date_columns) == 0))
     # Unit normalization
+    # If no unit normalization is desired, user can leave the fields blank
     unit_column = st.sidebar.selectbox("Select unit column to normalize:", options=df.columns)
-    from_unit = st.sidebar.text_input("Enter current unit (e.g., cm):", value="cm")
-    to_unit = st.sidebar.text_input("Enter desired unit (e.g., m):", value="m")
-    factor = st.sidebar.number_input("Enter conversion factor (e.g., 0.01 for cm to m):", value=0.01)
+    from_unit = st.sidebar.text_input("Enter current unit (e.g., cm):", value="", disabled=(unit_column == ""))
+    to_unit = st.sidebar.text_input("Enter desired unit (e.g., m):", value="", disabled=(unit_column == ""))
+    factor = st.sidebar.number_input("Enter conversion factor (e.g., 0.01 for cm to m):", value=0.0, disabled=(unit_column == ""))
     # Text case standardization
     text_columns = st.sidebar.multiselect("Select text columns to standardize case:", options=df.columns)
-    case_option = st.sidebar.selectbox("Select case option:", options=['lower', 'upper', 'title'])
+    case_option = st.sidebar.selectbox("Select case option:", options=['lower', 'upper', 'title'], index=0, disabled=(len(text_columns) == 0))
 
     if st.sidebar.button("Standardize Data"):
         # Apply standardization functions, if the respective options are not blank

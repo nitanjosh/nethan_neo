@@ -23,8 +23,8 @@ def app():
 
     # Date column selection
     date_columns = st.sidebar.multiselect("Select date columns to standardize (leave as is if not wanted):", options=df.columns)
-    #Disable if no date columns are selected
-    date_format = st.sidebar.text_input("Enter desired date format (e.g., %Y-%m-%d):", value="%Y-%m-%d", disabled=(len(date_columns) == 0))
+    # Select date format to choose from (common standards)
+    date_format = st.sidebar.selectbox("Select date format:", options=['%Y-%m-%d', '%d/%m/%Y', '%m-%d-%Y'], index=0, disabled=(len(date_columns) == 0))
     # Text case standardization
     text_columns = st.sidebar.multiselect("Select text columns to standardize case:", options=df.columns)
     case_option = st.sidebar.selectbox("Select case option:", options=['lower', 'upper', 'title'], index=0, disabled=(len(text_columns) == 0))

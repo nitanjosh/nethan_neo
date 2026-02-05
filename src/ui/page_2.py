@@ -19,12 +19,9 @@ def app():
     st.subheader("Original Data")
     st.dataframe(raw_data)
 
-def app():
-    st.title("Data Processing Application")
-
-    df = load_data()
-
     st.sidebar.header("Data Standardization Options")
+
+    
     if st.sidebar.button("Standardize Data"):
         df = convert_date_format(df, date_columns=['date_column'], date_format='%Y-%m-%d')
         df = normalize_units(df, unit_mappings={'unit_column': ('old_unit', 'new_unit', 0.001)})

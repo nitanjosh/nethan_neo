@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
-from src.data_cleaning import replace_with_none, trim_whitespace, remove_duplicates
-from src.config import DATA_DIRECTORY
+from data_cleaning import replace_with_none, trim_whitespace, remove_duplicates
+from config import DATA_DIRECTORY
 
 @st.cache_data
 def load_data():

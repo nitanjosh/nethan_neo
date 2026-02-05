@@ -3,9 +3,21 @@ import pandas as pd
 from data_standardization import convert_date_format, normalize_units, standardize_text_case
 from config import DATA_DIRECTORY
 
-@st.cache_data
-def load_data():
-    return pd.read_csv(DATA_DIRECTORY)
+def app():
+    st.title("Data Processing Application")
+
+    upload_dataset = st.file_uploader("Upload your CSV file:", type=["csv"])
+
+    if upload_dataset is None:
+        st.info("Upload your dataset to continue")
+        return
+
+    df = pd.read_csv(upload_dataset)
+    raw_data = df.copy()
+    data_to_process = df.copy()
+
+    st.subheader("Original Data")
+    st.dataframe(raw_data)
 
 def app():
     st.title("Data Processing Application")
